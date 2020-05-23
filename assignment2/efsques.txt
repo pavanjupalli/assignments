@@ -1,0 +1,78 @@
+1.Write a query which displays the module code and the duration for modules whose duration is less than 6.
+
+Ans:  select modulecode,duration from modules where duration <6;
+
+
+2.Write a query which will display the BATCHCODE, TRAINERID, COURSECODE, STARTDATE, CAPACITY 
+and BATCHSTRENGTH of the batches handled by the trainer KRISHNAN.
+
+Ans:  select batchcode,batches.trainerid,coursecode,startdate,capacity,batchstrength from batches inner join trainers on batches.trainerid = trainers.trainerid and trainers.trainername = 'KRISHNAN';
+
+3.Write a query which displays all the module names of the course code 100.
+
+Ans: select modulename from modules inner join courseandmodules on coursecode = 100 and modules.modulecode = courseandmodules.modulecode;  
+
+
+4.Write a query which displays the module names and course code for the course code 100.
+
+Ans: select modulename,coursecode from modules inner join courseandmodules on modules.modulecode = courseandmodules.modulecode and coursecode = 100; ;
+
+
+
+5."Write a query which will display the number of modules present in the course code 100. 
+<br/>
+Hint: display module name count with alias""NumberofModules"""
+
+Ans: select count(modulecode) as numOfModules from courseandmodules group by coursecode having coursecode = 100;
+
+6."Write a query which will display all the course code and the number of modules present 
+in that particular course.
+Hint: display module name count with alias""NumberofModules"""
+
+Ans: select count(modulecode) as numOfModules,coursecode from courseandmodules group by coursecode;
+
+7.Write a query which will display the course title and fees which has the maximum fees.
+
+Ans: select a.title, a.fees from courses a inner join (select  max(fees) as fees from courses ) b on b.fees = a.fees;
+
+8.Write a query which will display the student id, student name, batch code, place and 
+phone number of the students who belongs to Batch '3001'.
+
+Ans: select * from students where batchcode = 3001;
+
+9.Write a Query which will display the student ID, Student name, Batch code, place and phone number who are from CHENNAI.
+
+Ans: select * from students where place = 'CHENNAI';
+
+
+10.Write a query which displays the total number of modules which has less than 6 days duration. 
+<BR>Hint: display total number of modules with'LESSTHANSIXDAYS' as alias.
+
+Ans: select count(b.modulecode) as LESSTHANSIXDAYS  from (select modulecode  from modules where duration < 6) b;
+
+
+11.Write a query to display the batch code, course title, start date of the batches for the month of May and year 2012.
+
+Ans: select batchcode,coursecode,startdate from batches  where extract(year from startdate) = 2012 and extract(month from startdate) = 5;
+
+
+
+12.Write a query to display courses code, course title, course fees of the courses for which 
+no batches/training has been planned in the month of January and year 2012.
+
+Ans: select a.coursecode,title,fees from courses a inner join (select distinct coursecode from batches where not (extract(year from startdate) = 2012 and extract(month from startdate) = 1)) b on b.coursecode = a.coursecode;
+
+
+13.Write a query which displays the names of all the modules of the course titled 'Oracle DBA'
+
+Ans: select modulename from modules inner join (select distinct modulecode from courseandmodules inner join courses on courseandmodules.coursecode = courses.coursecode and courses.title = 'Oracle DBA') b on b.modulecode = modules.modulecode;
+
+
+14.Write a Query which displays the student ID, Student name, Batch code, place and phone number 
+of the student's who took training from CHENNAI in the year 2012.
+
+Ans: select studentid, studentname, b.batchcode, place, phone from students inner join (select batchcode from batches where extract(year from startdate) = 2012)  b on students.batchcode = b.batchcode and students.place = 'CHENNAI';
+
+15.Write a query which will display the student id, student names who are enrolled for the course code 200?
+
+Ans: select studentid,studentname from students inner join  (select batchcode from batches where coursecode = 100) b on b.batchcode =  students.batchcode; 

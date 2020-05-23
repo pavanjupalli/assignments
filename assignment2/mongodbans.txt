@@ -1,0 +1,36 @@
+1)  to display all the documents in the collection.
+
+ans: db.Employee.find().pretty()
+
+2.   to display the fields _id, fname  for all the documents in the collection.
+
+ans: db.Employee.find({},{"fname":1}).pretty() (hint: by default _id will be there)
+
+3.  to display the all fields   but exclude the field id for all the documents in the collection.
+
+ans: db.Employee.find({},{"_id":0,"fname":1, "salary":1,"city":1  }).pretty()
+
+4.  to display the first 5 Employees
+
+Ans: db.Employee.find().limit(5).pretty()  
+
+5. to display the next 5 Employees after skipping first 5  
+
+Ans: db.Employee.find().skip(5).limit(5).pretty()
+
+6.  to find the Employee who stay in Gurgaon city
+
+Ans: db.Employee.find({"city":"Gurgaon"}).pretty()
+
+7.  to find the Employee who jan salary is less than 20000
+
+Ans: db.Employee.find({"salary.jan":{$lt:20000}}).pretty()
+
+8. to find the Employee who jan salary is less than 20000 and who stay in Gurgaon city.
+
+Ans: db.Employee.find({$and:[{"city":"Gurgaon"},{"salary.jan":{$lt:20000}}]})
+
+10. count how any employee stay in Gurgaon city.
+
+Ans: db.Employee.find({"city":"Gurgaon"}).count() 
+
